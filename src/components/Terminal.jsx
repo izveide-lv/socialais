@@ -70,11 +70,28 @@ const Terminal = () => {
         response = new Date().toString();
         break;
       case 'help':
-        response = 'Available commands: ls, pwd, date, help, clear, cd, cat, history, open-image, play-audio,play-video';
+        response = `
+          Available Commands:
+          -------------------
+          - ls            : List directory contents
+          - pwd           : Print working directory
+          - date          : Show current date and time
+          - help          : Display this help message
+          - clear         : Clear the terminal screen
+          - cd            : Change directory
+          - cat           : Display file content
+          - history       : Show command history
+
+          Aliases:
+          --------
+          - open-image    : Open an image file
+          - play-audio    : Play an audio file
+          - play-video    : Play a video file
+              `;
         break;
-      case 'echo':
-        response = args.join(' ');
-        break;
+        case 'echo':
+          response = args.join(' ').replace(/["']/g, '');
+          break;      
       case 'history':
         NotInHistory = true;
         response = commandHistory
