@@ -1,7 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
 import Modal from './Modal'; // Importamos el componente Modal
 import AudioPlayer from './AudioPlayer'; // Importamos el componente AudioPlayer
+import VideoPlayer from './VideoPlayer';
 import fileSystem from '../utils/fileSystem';
+
 
 const Terminal = () => {
   const [commandHistory, setCommandHistory] = useState([]);
@@ -10,9 +12,10 @@ const Terminal = () => {
   const [output, setOutput] = useState([]);
   const [modalOpen, setModalOpen] = useState(false); // Estado para abrir el modal
   const [playerOpen, setPlayerOpen] = useState(false); // Estado para abrir el modal
+  const [videoOpen,setVideoOpen] = useState(false);
   const [imageSrc, setImageSrc] = useState(''); // Estado para la URL de la imagen
   const [audioSrc, setAudioSrc] = useState(''); // Estado para la URL del archivo de audio
-
+  const [videoSrc, setVideoSrc] = useState('')
   const outputRef = useRef(null);
 
   const currentDir = dirHistory[dirHistory.length - 1].path;
@@ -67,7 +70,7 @@ const Terminal = () => {
         response = new Date().toString();
         break;
       case 'help':
-        response = 'Available commands: ls, pwd, date, help, clear, cd, cat, history, open-image, play-audio';
+        response = 'Available commands: ls, pwd, date, help, clear, cd, cat, history, open-image, play-audio,play-video';
         break;
       case 'echo':
         response = args.join(' ');
@@ -141,6 +144,18 @@ const Terminal = () => {
         }
         break;
       }
+      case 'play-video': {
+        const videoFile = args.join(' ').trim();
+        const videoPath = resolvePath(currentDir, videoFile);
+        if (fileSystem[videoPath] && typeof fileSystem[videoPath] === 'string') {
+          setVideoSrc(fileSystem[videoPath]); // Configura la URL del video
+          setVideoOpen(true); // Abre el reproductor de video
+          response = `Playing video: ${videoFile}`;
+        } else {
+          response = `bash: play-video: ${videoFile}: No such file`;
+        }
+        break;
+      }
       case '': {
         NotInHistory = true;
         break;
@@ -170,6 +185,10 @@ const Terminal = () => {
     setPlayerOpen(false);
     setAudioSrc('');
   };
+  const closeVideoPlayer = () => {
+    setVideoOpen(false);
+    setVideoSrc('');
+  };
 
   return (
     <div className="h-screen w-full bg-bash text-white p-4 flex flex-col flex-start"
@@ -198,6 +217,9 @@ const Terminal = () => {
 
       {/* Reproductor de audio */}
       {playerOpen && <AudioPlayer audioSrc={audioSrc} closePlayer={closePlayer}/>}
+      
+      {/* Reproductor de Video */}
+      {videoOpen && (<VideoPlayer videoSrc={videoSrc} closeVideoPlayer={closeVideoPlayer} />)}
 
       {/* Área de entrada */}
       <div className="prompt flex items-center space-x-2 sm:text-2xl">

@@ -1,6 +1,5 @@
-// src/utils/fileSystem.js
 const fileSystem = {
-    ' ~': ['Documents', 'Downloads', 'Pictures', 'Music', 'Desktop', 'Projects'],
+    ' ~': ['Documents', 'Downloads', 'Pictures', 'Music', 'Videos', 'Desktop', 'Projects'],
     ' ~/Documents': ['Resume.pdf', 'Notes.txt', 'Budget.xlsx', 'Research.pptx'],
     ' ~/Downloads': ['File1.zip', 'File2.zip', 'Installer.exe'],
     ' ~/Pictures': ['Vacation.jpg', 'Family.png', 'ProfilePic.png'],
@@ -12,6 +11,10 @@ const fileSystem = {
     ' ~/Music/song2.mp3': 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
     ' ~/Music/album1.mp3': 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3',
     ' ~/Music/album2.mp3': 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3',
+    ' ~/Videos': ['Video1.mp4', 'Video2.mp4', 'Tutorial.mp4'],
+    ' ~/Videos/Video1.mp4': 'https://www.w3schools.com/html/mov_bbb.mp4',
+    ' ~/Videos/Video2.mp4': 'https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4',
+    ' ~/Videos/Tutorial.mp4': 'https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4',
     ' ~/Desktop': ['WorkStuff', 'Personal', 'Shortcuts'],
     ' ~/Projects': ['Project1', 'Project2', 'Project3'],
     ' ~/Documents/Notes.txt': 'This is a sample text file with notes.',
