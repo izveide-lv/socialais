@@ -1,15 +1,18 @@
 import { useState, useEffect, useRef } from 'react';
+import Modal from './Modal'; // Importamos el componente Modal
 import fileSystem from '../utils/fileSystem';
 
 const Terminal = () => {
   const [commandHistory, setCommandHistory] = useState([]);
-  const [dirHistory, setDirHistory] = useState([{ path: ' ~' }]); 
+  const [dirHistory, setDirHistory] = useState([{ path: ' ~' }]);
   const [input, setInput] = useState('');
   const [output, setOutput] = useState([]);
+  const [modalOpen, setModalOpen] = useState(false); // Estado para abrir el modal
+  const [imageSrc, setImageSrc] = useState(''); // Estado para la URL de la imagen
 
-  const outputRef = useRef(null); 
+  const outputRef = useRef(null);
 
-  const currentDir = dirHistory[dirHistory.length - 1].path; 
+  const currentDir = dirHistory[dirHistory.length - 1].path;
 
   useEffect(() => {
     if (outputRef.current) {
@@ -53,7 +56,7 @@ const Terminal = () => {
           </div>
         );
         break;
-      }          
+      }
       case 'pwd':
         response = currentDir.replace('~', '/home/user');
         break;
@@ -61,17 +64,17 @@ const Terminal = () => {
         response = new Date().toString();
         break;
       case 'help':
-        response = 'Available commands: ls, pwd, date, help, clear, cd, cat, history';
+        response = 'Available commands: ls, pwd, date, help, clear, cd, cat, history, open-image';
         break;
       case 'echo':
         response = args.join(' ');
         break;
-        case 'history':
-          NotInHistory = true;
-          response = commandHistory
-              .map((command, index) => `${index + 1}. ${command}`)
-              .join('\n');
-          break;      
+      case 'history':
+        NotInHistory = true;
+        response = commandHistory
+          .map((command, index) => `${index + 1}. ${command}`)
+          .join('\n');
+        break;
       case 'clear':
         setCommandHistory((prevHistory) => [...prevHistory, trimmedCommand]);
         setOutput([]);
@@ -102,16 +105,27 @@ const Terminal = () => {
         break;
       }
       case 'rm': {
-        const whatAreYouDoing = args[0] + args[1];  // Concatenar los argumentos para verificar
+        const whatAreYouDoing = args[0] + args[1]; // Concatenar los argumentos para verificar
         if (whatAreYouDoing === '-rf/') {
           response = 'bash: Your computer will be destroyed... just kidding! 😂';
           response += ' ¿What are you doing?';
-         
         } else {
-          response = 'bash: You dont have permission to delete anything.'; 
+          response = 'bash: You dont have permission to delete anything.';
         }
         break;
-      } 
+      }
+      case 'open-image': {
+        const imageName = args.join(' ').trim();
+        const imagePath = resolvePath(currentDir, imageName);
+        if (fileSystem[imagePath] && typeof fileSystem[imagePath] === 'string') {
+          setImageSrc(fileSystem[imagePath]); // Si la imagen existe, se establece la URL
+          setModalOpen(true); // Abrimos el modal
+          response = `Opening image: ${imageName}`;
+        } else {
+          response = `bash: open-image: ${imageName}: No such file`;
+        }
+        break;
+      }
       case '': {
         NotInHistory = true;
         break;
@@ -119,7 +133,7 @@ const Terminal = () => {
       default:
         response = `bash: ${baseCommand}: command not found`;
     }
-    
+
     setOutput((prevOutput) => [
       ...prevOutput,
       { command: trimmedCommand, response, dir: currentDir },
@@ -133,8 +147,17 @@ const Terminal = () => {
     }
   };
 
+  const closeModal = () => {
+    setModalOpen(false);
+    setImageSrc('');
+  };
+
   return (
-    <div className="h-screen w-full bg-bash text-white p-4 flex flex-col flex-start">
+    <div className="h-screen w-full bg-bash text-white p-4 flex flex-col flex-start"
+    style={{
+      scrollbarWidth: 'thin', 
+      scrollbarColor: '#38112e #38112e',
+    }}>
       {/* Área de salida */}
       <div
         className="output overflow-y-auto whitespace-pre-wrap break-words sm:text-2xl mb-4"
@@ -153,6 +176,9 @@ const Terminal = () => {
           </div>
         ))}
       </div>
+
+      {/* Modal */}
+      {modalOpen && <Modal imageSrc={imageSrc} closeModal={closeModal} />}
 
       {/* Área de entrada */}
       <div className="prompt flex items-center space-x-2 sm:text-2xl">
