@@ -173,6 +173,9 @@ const Terminal = () => {
         }
         break;
       }
+      case 'man':
+        response = 'bash: try command "help" for commands availables';
+        break;
       case '': {
         NotInHistory = true;
         break;

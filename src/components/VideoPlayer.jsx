@@ -1,6 +1,23 @@
+import { useEffect } from 'react';
+
 const VideoPlayer = ({ videoSrc, closeVideoPlayer }) => {
     const title = videoSrc.split('/').pop(); // Extraer el nombre del archivo del video
-  
+
+   useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === 'Backspace') {
+        closeVideoPlayer();
+      }
+    };
+
+    // Agregar el listener
+    window.addEventListener('keydown', handleKeyDown);
+
+    // Limpiar el listener al desmontar el componente
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [closeVideoPlayer]);
     return (
       <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-90">
         {/* Fondo semitransparente */}

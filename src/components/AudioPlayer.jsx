@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 const AudioPlayer = ({ audioSrc, closePlayer }) => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -13,6 +13,25 @@ const AudioPlayer = ({ audioSrc, closePlayer }) => {
     }
     setIsPlaying(!isPlaying);
   };
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === 'Backspace') {
+        closePlayer();
+      }
+      if (event.key === 'Control') {
+        togglePlay();
+      }
+    };
+
+    // Agregar el listener
+    window.addEventListener('keydown', handleKeyDown);
+
+    // Limpiar el listener al desmontar el componente
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [closePlayer, isPlaying]);
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
