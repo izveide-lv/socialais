@@ -8,6 +8,10 @@ const fileSystem = {
     ' ~/Pictures/Family.png': 'https://www.w3schools.com/w3images/family.jpg',
     ' ~/Pictures/ProfilePic.png': 'https://www.w3schools.com/w3images/avatar2.png',
     ' ~/Music': ['song1.mp3', 'song2.mp3', 'album1.mp3', 'album2.mp3'],
+    ' ~/Music/song1.mp3': 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
+    ' ~/Music/song2.mp3': 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
+    ' ~/Music/album1.mp3': 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3',
+    ' ~/Music/album2.mp3': 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3',
     ' ~/Desktop': ['WorkStuff', 'Personal', 'Shortcuts'],
     ' ~/Projects': ['Project1', 'Project2', 'Project3'],
     ' ~/Documents/Notes.txt': 'This is a sample text file with notes.',
@@ -25,4 +29,6 @@ const fileSystem = {
     ' ~/Projects/Project3/README.md': 'This is a readme for Project 3',
     ' ~/Projects/Project3/server.js': 'console.log("Server is running for Project 3")',
   };
+  
   export default fileSystem;
+  

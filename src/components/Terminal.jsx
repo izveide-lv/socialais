@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import Modal from './Modal'; // Importamos el componente Modal
+import AudioPlayer from './AudioPlayer'; // Importamos el componente AudioPlayer
 import fileSystem from '../utils/fileSystem';
 
 const Terminal = () => {
@@ -8,7 +9,9 @@ const Terminal = () => {
   const [input, setInput] = useState('');
   const [output, setOutput] = useState([]);
   const [modalOpen, setModalOpen] = useState(false); // Estado para abrir el modal
+  const [playerOpen, setPlayerOpen] = useState(false); // Estado para abrir el modal
   const [imageSrc, setImageSrc] = useState(''); // Estado para la URL de la imagen
+  const [audioSrc, setAudioSrc] = useState(''); // Estado para la URL del archivo de audio
 
   const outputRef = useRef(null);
 
@@ -64,7 +67,7 @@ const Terminal = () => {
         response = new Date().toString();
         break;
       case 'help':
-        response = 'Available commands: ls, pwd, date, help, clear, cd, cat, history, open-image';
+        response = 'Available commands: ls, pwd, date, help, clear, cd, cat, history, open-image, play-audio';
         break;
       case 'echo':
         response = args.join(' ');
@@ -126,6 +129,18 @@ const Terminal = () => {
         }
         break;
       }
+      case 'play-audio': {
+        const audioFile = args.join(' ').trim();
+        const audioPath = resolvePath(currentDir, audioFile);
+        if (fileSystem[audioPath] && typeof fileSystem[audioPath] === 'string') {
+          setAudioSrc(fileSystem[audioPath]);
+          setPlayerOpen(true)
+          response = `Playing audio: ${audioFile}`;
+        } else {
+          response = `bash: play-audio: ${audioFile}: No such file`;
+        }
+        break;
+      }
       case '': {
         NotInHistory = true;
         break;
@@ -151,18 +166,19 @@ const Terminal = () => {
     setModalOpen(false);
     setImageSrc('');
   };
+  const closePlayer = () => {
+    setPlayerOpen(false);
+    setAudioSrc('');
+  };
 
   return (
     <div className="h-screen w-full bg-bash text-white p-4 flex flex-col flex-start"
-    style={{
-      scrollbarWidth: 'thin', 
-      scrollbarColor: '#38112e #38112e',
-    }}>
+      style={{
+        scrollbarWidth: 'thin',
+        scrollbarColor: '#38112e #38112e',
+      }}>
       {/* Área de salida */}
-      <div
-        className="output overflow-y-auto whitespace-pre-wrap break-words sm:text-2xl mb-4"
-        ref={outputRef}
-      >
+      <div className="output overflow-y-auto whitespace-pre-wrap break-words sm:text-2xl mb-4" ref={outputRef}>
         {output.map((entry, index) => (
           <div className="mb-2" key={index}>
             <div>
@@ -179,6 +195,9 @@ const Terminal = () => {
 
       {/* Modal */}
       {modalOpen && <Modal imageSrc={imageSrc} closeModal={closeModal} />}
+
+      {/* Reproductor de audio */}
+      {playerOpen && <AudioPlayer audioSrc={audioSrc} closePlayer={closePlayer}/>}
 
       {/* Área de entrada */}
       <div className="prompt flex items-center space-x-2 sm:text-2xl">
