@@ -1,48 +1,58 @@
-# Astro Starter Kit: Basics
+# Linux Terminal Simulation with Astro, React, and Tailwind CSS
 
-```sh
-npm create astro@latest -- --template basics
-```
+This project simulates a Linux terminal where users can execute commands and interact with the system just as they would in a real terminal. It provides an engaging and functional terminal-like experience, with interactive components built using React and styled with Tailwind CSS.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+## Features
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+- **Command Simulation**:
+  - `ls`: Lists the contents of the current directory.
+  - `pwd`: Displays the current directory path.
+  - `cat`: Views the content of a specified file.
+  - `open-image`: Opens and displays images in a modal.
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
+- **Directory Navigation**: Navigate through directories and explore files just like in a real terminal environment.
 
-## 🚀 Project Structure
+- **Responsive Terminal-like Interface**: The application mimics a real terminal with command outputs displayed in an interactive format.
 
-Inside of your Astro project, you'll see the following folders and files:
+- **Modern Design**: Styled using Tailwind CSS to ensure a clean, responsive, and user-friendly interface.
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+## Installation and Setup
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+Follow these steps to get the project up and running on your local machine:
 
-## 🧞 Commands
+1. **Clone the repository**:
+    ```sh
+    git clone https://github.com/jjunlob074/linux-terminal-simulation.git
+    ```
 
-All commands are run from the root of the project, from a terminal:
+2. **Navigate into the project directory**:
+    ```sh
+    cd linux-terminal-simulation
+    ```
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+3. **Install the project dependencies**:
+    ```sh
+    npm install
+    ```
 
-## 👀 Want to learn more?
+4. **Start the development server**:
+    ```sh
+    npm run dev
+    ```
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+    The application will be available at [http://localhost:4321](http://localhost:4321).
+
+## Available Commands
+
+Here are the commands you can run for managing the project:
+
+| Command                 | Action                                      |
+| :---------------------- | :------------------------------------------ |
+| `npm install`           | Installs the project dependencies.          |
+| `npm run dev`           | Starts the local development server.        |
+| `npm run build`         | Builds the project for production.          |
+| `npm run preview`       | Previews the production build locally.      |
+
+## Learn More
+
+For more information on how Astro works, check out the [official documentation](https://docs.astro.build) or join the conversation in our [Discord server](https://astro.build/chat).
