@@ -90,12 +90,22 @@ const Terminal = () => {
               `;
         break;
         case 'echo':
-          response = args.join(' ').replace(/["']/g, '');
-          break;      
+          const environmentVariables = {
+            $PATH: '/astro:/react:/tailwind:/postcss:/npm:/javascript',
+            $AUTHOR: 'jjunlob074',
+            $HOME: 'https://github.com/jjunlob074/ASTRObash',
+            $NOW: new Date().toLocaleString(),
+            $RANDOM: Math.floor(Math.random() * 1000).toString(),
+          };
+          response = args
+          .join(' ')
+          .replace(/["']/g, '') // Elimina comillas
+          .replace(/\$(\w+)/g, (match, varName) => environmentVariables[`$${varName}`] || match); // Sustituye variables de entorno
+        break;    
       case 'history':
         NotInHistory = true;
         response = commandHistory
-          .map((command, index) => `${index + 1}. ${command}`)
+          .map((command, index) => `${index + 1}  ${command}`)
           .join('\n');
         break;
       case 'clear':
