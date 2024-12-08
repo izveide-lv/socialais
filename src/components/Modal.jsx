@@ -11,10 +11,10 @@ const Modal = ({ imageSrc, closeModal }) => {
       }
     };
 
-    // Agregar el listener
+    
     window.addEventListener('keydown', handleKeyDown);
 
-    // Limpiar el listener al desmontar el componente
+    
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };

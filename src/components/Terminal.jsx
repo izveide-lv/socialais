@@ -1,12 +1,13 @@
 import { useState, useEffect, useRef } from 'react';
-import Modal from './Modal'; // Importamos el componente Modal
-import AudioPlayer from './AudioPlayer'; // Importamos el componente AudioPlayer
+import Modal from './Modal'; 
+import AudioPlayer from './AudioPlayer'; 
 import VideoPlayer from './VideoPlayer';
 import fileSystem from '../utils/fileSystem';
 
 
 const Terminal = () => {
   const [commandHistory, setCommandHistory] = useState([]);
+  const [historyIndex, setHistoryIndex] = useState(-1);
   const [dirHistory, setDirHistory] = useState([{ path: ' ~' }]);
   const [input, setInput] = useState('');
   const [output, setOutput] = useState([]);
@@ -99,11 +100,10 @@ const Terminal = () => {
           };
           response = args
           .join(' ')
-          .replace(/["']/g, '') // Elimina comillas
+          .replace(/["']/g, '') 
           .replace(/\$(\w+)/g, (match, varName) => environmentVariables[`$${varName}`] || match); // Sustituye variables de entorno
         break;    
       case 'history':
-        NotInHistory = true;
         response = commandHistory
           .map((command, index) => `${index + 1}  ${command}`)
           .join('\n');
@@ -262,7 +262,28 @@ const Terminal = () => {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => {
-            if (e.key === 'Enter') handleCommand(input);
+            if (e.key === 'Enter') {
+              handleCommand(input);
+              setHistoryIndex(-1); // Reinicia el índice después de ejecutar un comando
+            } else if (e.key === 'ArrowUp') {
+              // Navegar hacia atrás en el historial
+              if (commandHistory.length > 0 && historyIndex < commandHistory.length - 1) {
+                const newIndex = historyIndex + 1;
+                setHistoryIndex(newIndex);
+                setInput(commandHistory[commandHistory.length - 1 - newIndex]);
+              }
+            } else if (e.key === 'ArrowDown') {
+              // Navegar hacia adelante en el historial
+              if (historyIndex > 0) {
+                const newIndex = historyIndex - 1;
+                setHistoryIndex(newIndex);
+                setInput(commandHistory[commandHistory.length - 1 - newIndex]);
+              } else {
+                // Salir del historial
+                setHistoryIndex(-1);
+                setInput('');
+              }
+            }
           }}
           className="bg-transparent border-none outline-none text-white w-full sm:text-2xl font-semibold"
           autoComplete="off"
