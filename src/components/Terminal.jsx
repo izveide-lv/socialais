@@ -231,8 +231,9 @@ const Terminal = () => {
         {output.map((entry, index) => (
           <div className="mb-2" key={index}>
             <div>
-              <span className="text-green-500">user@astro: </span>
-              <span className="text-blue-600 font-semibold">{entry.dir} </span>
+              <span className="text-green-500">user@astro</span>
+              <span className="text-white">:</span>
+              <span className="text-blue-600 font-semibold">{entry.dir}</span>
               <span className="text-white">$ {entry.command}</span>
             </div>
             {entry.response && (
@@ -252,10 +253,11 @@ const Terminal = () => {
       {videoOpen && (<VideoPlayer videoSrc={videoSrc} closeVideoPlayer={closeVideoPlayer} />)}
 
       {/* Área de entrada */}
-      <div className="prompt flex items-center space-x-2 sm:text-2xl">
-        <span className="text-green-500">user@astro:</span>
-        <span className="text-blue-600 font-semibold">{currentDir}</span>
-        <span className="text-white">$</span>
+      <div className="prompt flex items-center sm:text-2xl">
+        <span className="text-green-500">user@astro</span>
+        <span className="text-white">:</span>
+        <span className="text-blue-600 font-semibold pl-1">{currentDir}</span>
+        <span className="text-white mr-2">$</span>
         <input
           type="text"
           id="prompt"
