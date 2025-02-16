@@ -96,8 +96,8 @@ const Terminal = () => {
         break;
       case 'cik': 
         const price = Math.floor(Math.random() * 600 + 900).toString();
-        response = `Piesakoties šodien, izveidosim mājaslapu par €${price}. 
-Raksti uz kods@socialais.dev un pievieno ekrānšāviņu ar šo ziņu.`;
+        response = `Piesakies šodien un izveidosim statisku vizītkartes tipa mājaslapu par €${price}. 
+Lai pieteiktos, raksti uz kods@socialais.dev un pievieno ekrānšāviņu ar šo ziņu.`;
         break  
       case 'kā':
         response = `
