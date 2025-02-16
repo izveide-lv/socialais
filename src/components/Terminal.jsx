@@ -11,11 +11,11 @@ const Terminal = () => {
   const [dirHistory, setDirHistory] = useState([{ path: ' ~' }]);
   const [input, setInput] = useState('');
   const [output, setOutput] = useState([]);
-  const [modalOpen, setModalOpen] = useState(false); // Estado para abrir el modal
-  const [playerOpen, setPlayerOpen] = useState(false); // Estado para abrir el modal
+  const [modalOpen, setModalOpen] = useState(false); 
+  const [playerOpen, setPlayerOpen] = useState(false); 
   const [videoOpen,setVideoOpen] = useState(false);
-  const [imageSrc, setImageSrc] = useState(''); // Estado para la URL de la imagen
-  const [audioSrc, setAudioSrc] = useState(''); // Estado para la URL del archivo de audio
+  const [imageSrc, setImageSrc] = useState(''); 
+  const [audioSrc, setAudioSrc] = useState(''); 
   const [videoSrc, setVideoSrc] = useState('')
   const outputRef = useRef(null);
 
@@ -34,7 +34,7 @@ const Terminal = () => {
     if (relativePath.startsWith('/')) {
       return relativePath;
     }
-    return `${dir}/${relativePath}`.replace(/\/+/g, '/'); // Manejo de slashes redundantes
+    return `${dir}/${relativePath}`.replace(/\/+/g, '/');
   };
 
   const handleCommand = (command) => {
@@ -44,7 +44,7 @@ const Terminal = () => {
     let response = '';
 
     switch (baseCommand) {
-      case 'ls': {
+      case 'kas': {
         const dirContent = fileSystem[currentDir] || [];
         response = (
           <div>
@@ -54,7 +54,7 @@ const Terminal = () => {
               return (
                 <span
                   key={index}
-                  className={isDirectory ? 'text-blue-600 ml-2' : 'text- ml-2'}
+                  className={isDirectory ? 'text-white ml-2' : 'text- ml-2'}
                 >
                   {item}{' '}
                 </span>
@@ -64,56 +64,57 @@ const Terminal = () => {
         );
         break;
       }
-      case 'pwd':
-        response = currentDir.replace('~', '/home/user');
+      case 'kur':
+        response = currentDir.replace('~', '/sociālais/kods');
         break;
-      case 'date':
-        response = new Date().toString();
+      case 'kad':
+        response = new Date().toLocaleString();
         break;
-      case 'help':
+      case 'paldies':
+        response = 'nav par ko!';
+        break;
+      case 'iziet':
+        response = 'paldies, ka paviesojies! uz redzēšanos!';
+        break;
+      case 'kā':
         response = `
-          Available Commands:
-          -------------------
-          - ls            : List directory contents
-          - pwd           : Print working directory
-          - date          : Show current date and time
-          - help          : Display this help message
-          - clear         : Clear the terminal screen
-          - cd            : Change directory
-          - cat           : Display file content
-          - history       : Show command history
-
-          Aliases:
-          --------
-          - open-image    : Open an image file
-          - play-audio    : Play an audio file
-          - play-video    : Play a video file
-              `;
+Pieejamās komandas:
+-------------------
+- kas:   Parāda mapes
+- kur:   Parāda vietu
+- kad:   Parāda laiku
+- kā:    Parāda šo ziņu
+- prom:  Notīra ekrānu
+- uz:    Maina vietu, (← = ..)
+- lasi:  Nolasa failu
+- ko:    Parāda komandu vēsturi
+- saki:  Atkārto ievadīto tekstu
+- dzēst: Dzēš failu (nav atļauts)
+    `;
         break;
-        case 'echo':
+        case 'saki':
           const environmentVariables = {
-            $PATH: '/astro:/react:/tailwind:/postcss:/npm:/javascript',
-            $AUTHOR: 'jjunlob074',
-            $HOME: 'https://github.com/jjunlob074/ASTRObash',
-            $NOW: new Date().toLocaleString(),
-            $RANDOM: Math.floor(Math.random() * 1000).toString(),
+            "kas": 'Sociālais kods',
+            "kur": 'socialais.dev',
+            "kad": new Date().toLocaleString(),
+            "cik": Math.floor(Math.random() * 1000).toString(),
           };
           response = args
           .join(' ')
           .replace(/["']/g, '') 
-          .replace(/\$(\w+)/g, (match, varName) => environmentVariables[`$${varName}`] || match); // Sustituye variables de entorno
+          .replace(/(\w+)/g, (match, varName) => environmentVariables[`${varName}`] || match);
         break;    
-      case 'history':
+      case 'ko':
         response = commandHistory
           .map((command, index) => `${index + 1}  ${command}`)
           .join('\n');
         break;
-      case 'clear':
+      case 'prom':
         setCommandHistory((prevHistory) => [...prevHistory, trimmedCommand]);
         setOutput([]);
         setInput('');
         return;
-      case 'cd': {
+      case 'uz': {
         const newDir = args.join(' ').trim();
         const targetPath = resolvePath(currentDir, newDir);
 
@@ -122,76 +123,76 @@ const Terminal = () => {
         } else if (fileSystem[targetPath] && Array.isArray(fileSystem[targetPath])) {
           setDirHistory((prevHistory) => [...prevHistory, { path: targetPath }]);
         } else {
-          response = `bash: cd: ${newDir}: No such directory`;
+          response = `kods: uz: "${newDir}" mape neeksistē`;
         }
         break;
       }
-      case 'cat': {
+      case 'lasi': {
         const fileName = args.join(' ').trim();
         const filePath = resolvePath(currentDir, fileName);
 
         if (fileSystem[filePath] && typeof fileSystem[filePath] === 'string') {
           response = fileSystem[filePath];
+        
         } else {
-          response = `bash: cat: ${fileName}: No such file`;
+          response = `kods: lasi: "${fileName}" fails neeksistē`;
         }
         break;
       }
-      case 'rm': {
-        const whatAreYouDoing = args[0] + args[1]; // Concatenar los argumentos para verificar
-        if (whatAreYouDoing === '-rf/') {
-          response = 'bash: Your computer will be destroyed... just kidding! 😂';
-          response += ' ¿What are you doing?';
+      case 'dzēst': {
+        if (args[0] === '-rf') {
+          response = 'kods: ak, šausmas... tu zini šo komandu?';
+          response += ' par laimi, šeit tā nedarbojas.';
         } else {
-          response = 'bash: You dont have permission to delete anything.';
+          response = 'kods: jums nav atļaujas dzēst šo failu';
         }
         break;
       }
-      case 'open-image': {
-        const imageName = args.join(' ').trim();
-        const imagePath = resolvePath(currentDir, imageName);
-        if (fileSystem[imagePath] && typeof fileSystem[imagePath] === 'string') {
-          setImageSrc(fileSystem[imagePath]); // Si la imagen existe, se establece la URL
-          setModalOpen(true); // Abrimos el modal
-          response = `Opening image: ${imageName}`;
-        } else {
-          response = `bash: open-image: ${imageName}: No such file`;
-        }
-        break;
-      }
-      case 'play-audio': {
-        const audioFile = args.join(' ').trim();
-        const audioPath = resolvePath(currentDir, audioFile);
-        if (fileSystem[audioPath] && typeof fileSystem[audioPath] === 'string') {
-          setAudioSrc(fileSystem[audioPath]);
-          setPlayerOpen(true)
-          response = `Playing audio: ${audioFile}`;
-        } else {
-          response = `bash: play-audio: ${audioFile}: No such file`;
-        }
-        break;
-      }
-      case 'play-video': {
-        const videoFile = args.join(' ').trim();
-        const videoPath = resolvePath(currentDir, videoFile);
-        if (fileSystem[videoPath] && typeof fileSystem[videoPath] === 'string') {
-          setVideoSrc(fileSystem[videoPath]); // Configura la URL del video
-          setVideoOpen(true); // Abre el reproductor de video
-          response = `Playing video: ${videoFile}`;
-        } else {
-          response = `bash: play-video: ${videoFile}: No such file`;
-        }
-        break;
-      }
-      case 'man':
-        response = 'bash: try command "help" for commands availables';
+      // case 'open-image': {
+      //   const imageName = args.join(' ').trim();
+      //   const imagePath = resolvePath(currentDir, imageName);
+      //   if (fileSystem[imagePath] && typeof fileSystem[imagePath] === 'string') {
+      //     setImageSrc(fileSystem[imagePath]); // Si la imagen existe, se establece la URL
+      //     setModalOpen(true); // Abrimos el modal
+      //     response = `Opening image: ${imageName}`;
+      //   } else {
+      //     response = `bash: open-image: ${imageName}: No such file`;
+      //   }
+      //   break;
+      // }
+      // case 'play-audio': {
+      //   const audioFile = args.join(' ').trim();
+      //   const audioPath = resolvePath(currentDir, audioFile);
+      //   if (fileSystem[audioPath] && typeof fileSystem[audioPath] === 'string') {
+      //     setAudioSrc(fileSystem[audioPath]);
+      //     setPlayerOpen(true)
+      //     response = `Playing audio: ${audioFile}`;
+      //   } else {
+      //     response = `bash: play-audio: ${audioFile}: No such file`;
+      //   }
+      //   break;
+      // }
+      // case 'play-video': {
+      //   const videoFile = args.join(' ').trim();
+      //   const videoPath = resolvePath(currentDir, videoFile);
+      //   if (fileSystem[videoPath] && typeof fileSystem[videoPath] === 'string') {
+      //     setVideoSrc(fileSystem[videoPath]); // Configura la URL del video
+      //     setVideoOpen(true); // Abre el reproductor de video
+      //     response = `Playing video: ${videoFile}`;
+      //   } else {
+      //     response = `bash: play-video: ${videoFile}: No such file`;
+      //   }
+      //   break;
+      // }
+      case 'test':
+        response = 'kods: pamēģini rakstīt "kā", lai uzzinātu kādas komandas ir pieejamas';
         break;
       case '': {
         NotInHistory = true;
         break;
       }
       default:
-        response = `bash: ${baseCommand}: command not found`;
+        response = `kods: ${baseCommand}: komanda nav atrasta`;
     }
 
     setOutput((prevOutput) => [
@@ -200,9 +201,8 @@ const Terminal = () => {
     ]);
     setInput('');
 
-    // si no es un comando válido, no lo quiero en el historial
     if (NotInHistory) return;
-    if (response !== `bash: ${baseCommand}: command not found`) {
+    if (response !== `kods: ${baseCommand}: komanda nav atrasta`) {
       setCommandHistory((prevHistory) => [...prevHistory, trimmedCommand]);
     }
   };
@@ -221,20 +221,20 @@ const Terminal = () => {
   };
 
   return (
-    <div className="h-screen w-full bg-bash text-white p-4 flex flex-col flex-start"
+    <div className="h-screen w-full bg-[#062782] text-white p-4 flex flex-col flex-start"
       style={{
         scrollbarWidth: 'thin',
-        scrollbarColor: '#38112e #38112e',
+        scrollbarColor: '#cf3812 white',
       }}>
-      {/* Área de salida */}
+        <img src="/logo-socialais-kods--animated.svg" alt="Sociālais kods" className="opacity-15 absolute right-10 top-5" />
       <div className="output overflow-y-auto whitespace-pre-wrap break-words sm:text-2xl mb-4" ref={outputRef}>
         {output.map((entry, index) => (
           <div className="mb-2" key={index}>
             <div>
-              <span className="text-green-500">user@astro</span>
-              <span className="text-white">:</span>
-              <span className="text-blue-600 font-semibold">{entry.dir}</span>
-              <span className="text-white">$ {entry.command}</span>
+              <span className="text-[#cf3812] opacity-60">lietotājs</span>
+              <span className="text-white opacity-60">:</span>
+              <span className="text-[#faede3] font-semibold opacity-60">{entry.dir}</span>
+              <span className="text-white opacity-60">$ {entry.command}</span>
             </div>
             {entry.response && (
               <div className="text-white m-2">{entry.response}</div>
@@ -243,20 +243,16 @@ const Terminal = () => {
         ))}
       </div>
 
-      {/* Modal */}
       {modalOpen && <Modal imageSrc={imageSrc} closeModal={closeModal} />}
 
-      {/* Reproductor de audio */}
       {playerOpen && <AudioPlayer audioSrc={audioSrc} closePlayer={closePlayer}/>}
       
-      {/* Reproductor de Video */}
       {videoOpen && (<VideoPlayer videoSrc={videoSrc} closeVideoPlayer={closeVideoPlayer} />)}
 
-      {/* Área de entrada */}
       <div className="prompt flex items-center sm:text-2xl">
-        <span className="text-green-500">user@astro</span>
+        <span className="text-[#cf3812]">lietotājs</span>
         <span className="text-white">:</span>
-        <span className="text-blue-600 font-semibold pl-1">{currentDir}</span>
+        <span className="text-[#faede3] font-semibold pl-1">{currentDir}</span>
         <span className="text-white mr-2">$</span>
         <input
           type="text"
@@ -266,22 +262,19 @@ const Terminal = () => {
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
               handleCommand(input);
-              setHistoryIndex(-1); // Reinicia el índice después de ejecutar un comando
+              setHistoryIndex(-1);
             } else if (e.key === 'ArrowUp') {
-              // Navegar hacia atrás en el historial
               if (commandHistory.length > 0 && historyIndex < commandHistory.length - 1) {
                 const newIndex = historyIndex + 1;
                 setHistoryIndex(newIndex);
                 setInput(commandHistory[commandHistory.length - 1 - newIndex]);
               }
             } else if (e.key === 'ArrowDown') {
-              // Navegar hacia adelante en el historial
               if (historyIndex > 0) {
                 const newIndex = historyIndex - 1;
                 setHistoryIndex(newIndex);
                 setInput(commandHistory[commandHistory.length - 1 - newIndex]);
               } else {
-                // Salir del historial
                 setHistoryIndex(-1);
                 setInput('');
               }
