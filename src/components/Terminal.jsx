@@ -71,11 +71,23 @@ const Terminal = () => {
         break;
       }
       case 'kur':
-        response = currentDir.replace('~', '/sociālais/kods');
+        response = currentDir.replace('~', '/Sociālais/kods');
         break;
       case 'kad':
         response = new Date().toLocaleString();
         break;
+      case 'lol':
+        response = ':)';
+        break;
+      case 'sudo':
+          response = 'labs mēģinājums, bet šeit tas nedarbosies';
+        break;
+      case 'rm':
+          response = 'vai tas ir nepieciešams?';
+        break;  
+      case 'kods':
+          response = 'github.com/izveide-lv/socialais';
+        break;   
       case 'paldies':
         response = 'nav par ko!';
         break;
