@@ -226,7 +226,7 @@ Pieejamās komandas:
         scrollbarWidth: 'thin',
         scrollbarColor: '#cf3812 white',
       }}>
-        <img src="/logo-socialais-kods--animated.svg" alt="Sociālais kods" className="opacity-15 absolute right-10 top-5" />
+        <img src="/logo-socialais-kods--animated.svg" alt="Sociālais kods" className="opacity-15 -z-1 absolute max-w-[320px] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
       <div className="output overflow-y-auto whitespace-pre-wrap break-words sm:text-2xl mb-4" ref={outputRef}>
         {output.map((entry, index) => (
           <div className="mb-2" key={index}>
