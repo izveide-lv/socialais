@@ -257,6 +257,8 @@ Pieejamās komandas:
         <input
           type="text"
           id="prompt"
+          autocorrect="off" 
+          autocapitalize="none"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => {
