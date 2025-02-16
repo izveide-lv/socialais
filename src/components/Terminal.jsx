@@ -206,7 +206,7 @@ Pieejamās komandas:
         response = `kods: ${baseCommand}: komanda nav atrasta. raksti "kā", lai uzzinātu kādas komandas ir pieejamas`;
     }
 
-    umami.track(props => ({ ...props, name: baseCommand }));
+    umami.track(props => ({ ...props, name: baseCommand, data: { command: trimmedCommand } }));
 
     setOutput((prevOutput) => [
       ...prevOutput,
