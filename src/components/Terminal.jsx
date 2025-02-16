@@ -192,7 +192,7 @@ Pieejamās komandas:
         break;
       }
       default:
-        response = `kods: ${baseCommand}: komanda nav atrasta`;
+        response = `kods: ${baseCommand}: komanda nav atrasta. raksti "kā", lai uzzinātu kādas komandas ir pieejamas`;
     }
 
     setOutput((prevOutput) => [
