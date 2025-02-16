@@ -37,13 +37,19 @@ const Terminal = () => {
     return `${dir}/${relativePath}`.replace(/\/+/g, '/');
   };
 
+  const uncapitalize = (str) => {
+    // Return the input string with its first character converted to lowercase,
+    // concatenated with the rest of the string starting from the second character
+    return str.charAt(0).toLowerCase() + str.slice(1);
+  }
+
   const handleCommand = (command) => {
     let NotInHistory;
     const trimmedCommand = command.trim();
     const [baseCommand, ...args] = trimmedCommand.split(' ');
     let response = '';
-
-    switch (baseCommand) {
+    const lowercaseCommand = uncapitalize(baseCommand);
+    switch (lowercaseCommand) {
       case 'kas': {
         const dirContent = fileSystem[currentDir] || [];
         response = (
@@ -257,8 +263,8 @@ Pieejamās komandas:
         <input
           type="text"
           id="prompt"
-          autocorrect="off" 
-          autocapitalize="none"
+          autoCorrect="off" 
+          autoCapitalize="none"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => {
