@@ -91,11 +91,11 @@ Pieejamās komandas:
 - kad:   Parāda laiku
 - kā:    Parāda šo ziņu
 - prom:  Notīra ekrānu
-- uz:    Maina vietu, (← = ..)
+- uz:    Maina vietu (← ..)
 - lasi:  Nolasa failu
 - ko:    Parāda komandu vēsturi
 - saki:  Atkārto ievadīto tekstu
-- dzēst: Dzēš failu (nav atļauts)
+- dzēs:  Dzēš failu (nav atļauts)
     `;
         break;
         case 'saki':
@@ -145,7 +145,7 @@ Pieejamās komandas:
         }
         break;
       }
-      case 'dzēst': {
+      case 'dzēs': {
         if (args[0] === '-rf') {
           response = 'kods: ak, šausmas... tu zini šo komandu?';
           response += ' par laimi, šeit tā nedarbojas.';
