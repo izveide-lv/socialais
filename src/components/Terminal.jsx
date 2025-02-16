@@ -91,7 +91,7 @@ Pieejamās komandas:
 - kad:   Parāda laiku
 - kā:    Parāda šo ziņu
 - prom:  Notīra ekrānu
-- uz:    Maina vietu (← ..)
+- uz:    Maina vietu (← /)
 - lasi:  Nolasa failu
 - ko:    Parāda komandu vēsturi
 - saki:  Atkārto ievadīto tekstu
@@ -103,7 +103,7 @@ Pieejamās komandas:
             "kas": 'Sociālais kods',
             "kur": 'socialais.dev',
             "kad": new Date().toLocaleString(),
-            "cik": Math.floor(Math.random() * 1000).toString(),
+            "cik": Math.floor(Math.random() * 1500).toString(),
           };
           response = args
           .join(' ')
