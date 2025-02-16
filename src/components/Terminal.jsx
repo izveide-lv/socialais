@@ -82,10 +82,16 @@ const Terminal = () => {
       case 'iziet':
         response = 'paldies, ka paviesojies! uz redzēšanos!';
         break;
+      case 'cik': 
+        const price = Math.floor(Math.random() * 600 + 900).toString();
+        response = `Piesakoties šodien, izveidosim mājaslapu par €${price}. 
+Raksti uz kods@socialais.dev un pievieno ekrānšāviņu ar šo ziņu.`;
+        break  
       case 'kā':
         response = `
 Pieejamās komandas:
 -------------------
+- cik:   Izveides izmaksas
 - kas:   Parāda mapes
 - kur:   Parāda vietu
 - kad:   Parāda laiku
@@ -103,7 +109,6 @@ Pieejamās komandas:
             "kas": 'Sociālais kods',
             "kur": 'socialais.dev',
             "kad": new Date().toLocaleString(),
-            "cik": Math.floor(Math.random() * 1500).toString(),
           };
           response = args
           .join(' ')
@@ -201,6 +206,8 @@ Pieejamās komandas:
         response = `kods: ${baseCommand}: komanda nav atrasta. raksti "kā", lai uzzinātu kādas komandas ir pieejamas`;
     }
 
+    umami.track(props => ({ ...props, name: baseCommand }));
+
     setOutput((prevOutput) => [
       ...prevOutput,
       { command: trimmedCommand, response, dir: currentDir },
@@ -232,7 +239,11 @@ Pieejamās komandas:
         scrollbarWidth: 'thin',
         scrollbarColor: '#cf3812 white',
       }}>
-        <img src="/logo-socialais-kods--animated.svg" alt="Sociālais kods" className="opacity-15 z-0 pointer-events-none fixed max-w-[320px] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
+         <img
+      src="/logo-socialais-kods--animated.svg"
+      alt="Sociālais kods"
+      class="opacity-15 z-0 pointer-events-none fixed max-w-[320px] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+    />
       <div className="output overflow-y-auto whitespace-pre-wrap break-words sm:text-2xl mb-4" ref={outputRef}>
         {output.map((entry, index) => (
           <div className="mb-2" key={index}>
