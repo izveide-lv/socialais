@@ -100,6 +100,8 @@ const Terminal = () => {
 Lai pieteiktos, raksti uz kods@socialais.dev un pievieno ekrānšāviņu ar šo ziņu.`;
         break  
       case 'kā':
+      case '?':
+      case 'nesaprotu':    
         response = `
 Pieejamās komandas:
 -------------------
@@ -114,6 +116,9 @@ Pieejamās komandas:
 - ko:    Parāda komandu vēsturi
 - saki:  Atkārto ievadīto tekstu
 - dzēs:  Dzēš failu (nav atļauts)
+-------------------
+Piemērs: raksti "uz Atsauksmes" un "lasi alise", lai redzētu Alises atsauksmi.
+Pēc tam raksti "uz /", lai atgrieztos sākumā, "uz Vakances" un "lasi asistents".
     `;
         break;
         case 'saki':
