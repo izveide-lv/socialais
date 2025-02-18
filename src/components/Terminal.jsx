@@ -118,7 +118,7 @@ Pieejamās komandas:
 - dzēs:  Dzēš failu (nav atļauts)
 -------------------
 Piemērs: raksti "uz Atsauksmes" un "lasi alise", lai redzētu Alises atsauksmi.
-Pēc tam raksti "uz /", lai atgrieztos sākumā, "uz Vakances" un "lasi asistents".
+Pēc tam raksti "uz /", lai atgrieztos sākumā, "uz Vakances" un "lasi redaktors".
     `;
         break;
         case 'saki':
