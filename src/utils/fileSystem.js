@@ -13,7 +13,7 @@ const fileSystem = {
     "Pārdošanas lapa, veltīta labojumu veikšanai mājaslapās.",
   " ~/Projekti/latvija.ai": "Latvijas labāko mājaslapu katalogs.",
   " ~/Projekti/lieks.lv": "Rīks, kas ļauj viegli publicēt sludinājumus.",
-  " ~/Projekti/omnis.lv": "E-pasta mārketinga serviss.",
+  " ~/Projekti/omnis.lv": "Labākie piedāvājumi un atlaides.",
   " ~/Klienti": [
     "complete4.eu",
     "debesmanna.com",
