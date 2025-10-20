@@ -1,5 +1,5 @@
 const fileSystem = {
-  " ~": ["Projekti", "Klienti", "Atsauksmes", "Par", "Vakances", "Kontakti"],
+  " ~": ["Projekti", "Klienti", "Atsauksmes", "Par", "Kontakti"],
   " ~/Projekti": [
     "izveide.lv",
     "labojam.lv",
