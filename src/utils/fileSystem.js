@@ -80,12 +80,12 @@ const fileSystem = {
 — Raivo Klotiņš, zvērināts advokāts
 `,
   " ~/Par": ["uzņēmums"],
-  " ~/Par/uzņēmums": `SIA "Sociālais kods" ir 2021. gadā dibināta digitālā aģentūra, kurā šobrīd strādā viens darbinieks — Armands Leimanis. Uzņēmumam ir piešķirts sociālā uzņēmuma statuss, jo tas nodarbina cilvēkus ar garīga rakstura traucējumiem vai invaliditāti.`,
+  " ~/Par/uzņēmums": `SIA "Sociālais kods" ir 2021. gadā dibināts uzņēmumiņš, kurā šobrīd strādā trīs darbinieki — Armands Leimanis, Ivo Štrauss un Inga Millere. Uzņēmumam ir piešķirts sociālā uzņēmuma statuss, jo tas nodarbina cilvēkus ar garīga rakstura traucējumiem vai invaliditāti.`,
   " ~/Kontakti": ["e-pasts", "telefons", "adrese"],
   " ~/Kontakti/e-pasts": "kods@socialais.dev",
   " ~/Kontakti/telefons": "+371 2522 6526",
   " ~/Kontakti/adrese":
-    "Čiekurkalna 4. škērslīnija 22A-1, Rīga, Latvija, LV-1026",
+    "Čiekurkalna 4. šķērslīnija 22A-1, Rīga, Latvija, LV-1026",
 };
 
 export default fileSystem;
